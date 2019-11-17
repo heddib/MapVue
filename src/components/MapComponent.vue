@@ -15,38 +15,48 @@
         disableDefaultUi: false
       }"
     >
-    <gmap-custom-marker alignment="bottomright" :marker="marker">
-      <div class="card">
-        <center>
-          Test
-        </center>
-      </div>
-    </gmap-custom-marker>
-    <GmapMarker
-      v-bind:key="index"
-      v-for="(m, index) in markers"
-        v-bind:position="m.position"
-        v-bind:clickable="true"
-      />
+
+    <gmap-marker
+    v-for="(marker, index) in markers"
+    :key="index"
+    :position="marker.position"
+    :label="marker.name"
+    >
+      
+    </gmap-marker>
+
     </GmapMap>
   </div>
 </template>
 
 <script>
-import GmapCustomMarker from 'vue2-gmap-custom-marker';
+// import GmapCustomMarker from 'vue2-gmap-custom-marker';
 
 export default {
   name: 'MapComponent',
   components: {
-    'gmap-custom-marker': GmapCustomMarker
+    // 'gmap-custom-marker': GmapCustomMarker
+  },
+  methods: {
+    addMarker(name, lat, lng) {
+      this.markers.push({
+        position: {
+          lat: lat,
+          lng: lng,
+        },
+        name: name
+      })
+    }
   },
   data() {
     return {
-      marker: {
-        lat: 48.8005,
-        lng: 2.6038
-      }
+      markers: []
     }
+  },
+  mounted() {
+    this.addMarker('Tour Eiffel', 48.858370, 2.294481);
+    this.addMarker('Disneyland Paris', 48.876077, 2.79646);
+    this.addMarker('Musée du Louvre', 48.861016, 2.335879);
   }
 }
 </script>
